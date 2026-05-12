@@ -3,6 +3,7 @@ import { i18n } from 'src/localization/localization';
 import { DEFAULT_SETTINGS, PPSettingTab } from 'src/settings/settings';
 import { updateAutoHideProps, updateBannerStyles, updateBaseTagsStyle, updateCoverStyles, updateHiddenEmptyProperties, updateHiddenMetadataContainer, updateHiddenPropertiesInPropTab, updateHideMetadataAddButton, updateHidePropTitle, updateIconStyles, updatePillPaddings, updateRelativeDateColors } from 'src/utils/updates/updateStyles';
 import { updateAllProperties } from 'src/utils/updates/updateElements';
+import { updateAllSimpleImages } from 'src/utils/updates/updateSimpleImages';
 
 
 
@@ -143,6 +144,7 @@ export const showOtherSettings = (settingTab: PPSettingTab) => {
                                 updateHideMetadataAddButton(plugin)
                                 updateBaseTagsStyle(plugin)
                                 updateAllProperties(plugin)
+                                updateAllSimpleImages(plugin)
                             }
                         }
                     }
@@ -178,8 +180,8 @@ export const showOtherSettings = (settingTab: PPSettingTab) => {
                 updateHideMetadataAddButton(plugin)
                 updateBaseTagsStyle(plugin)
                 updateAllProperties(plugin)
+                updateAllSimpleImages(plugin)
                 settingTab.display();
                 new Notice(i18n.t("CLEAR_SETTINGS_NOTICE"))
             }))
 }
-

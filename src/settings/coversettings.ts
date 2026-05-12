@@ -5,6 +5,7 @@ import {
 } from 'src/utils/updates/updateStyles';
 import { PPSettingTab } from 'src/settings/settings';
 import { updateAllCovers } from 'src/utils/updates/updateCovers';
+import { updateAllSimpleImages } from 'src/utils/updates/updateSimpleImages';
 
 
 
@@ -269,5 +270,48 @@ export const showCoverSettings = (settingTab: PPSettingTab) => {
         });
 
 
+    }
+
+    containerEl.createEl("h3", { text: i18n.t("SIMPLE_IMAGE_SECTION") });
+
+    new Setting(containerEl)
+        .setName(i18n.t("ENABLE_SIMPLE_IMAGE"))
+        .addToggle(toggle => toggle
+            .setValue(plugin.settings.enableSimpleImage)
+            .onChange(async (value) => {
+                plugin.settings.enableSimpleImage = value;
+                await plugin.saveSettings();
+                settingTab.display();
+                updateAllSimpleImages(plugin);
+            }));
+
+    if (plugin.settings.enableSimpleImage) {
+        new Setting(containerEl)
+            .setName(i18n.t("SIMPLE_IMAGE_PROPERTY"))
+            .addText(text => text
+                .setPlaceholder('image')
+                .setValue(plugin.settings.simpleImageProperty)
+                .onChange(async (value) => {
+                    plugin.settings.simpleImageProperty = value;
+                    await plugin.saveSettings();
+                    updateAllSimpleImages(plugin);
+                }));
+
+        new Setting(containerEl)
+            .setName(i18n.t("SIMPLE_IMAGE_POSITION"))
+            .addDropdown(dropdown => dropdown
+                .addOptions({
+                    "left": i18n.t("LEFT"),
+                    "right": i18n.t("RIGHT"),
+                    "top": i18n.t("TOP"),
+                    "bottom": i18n.t("BOTTOM")
+                })
+                .setValue(plugin.settings.simpleImagePosition)
+                .onChange(async (value) => {
+                    plugin.settings.simpleImagePosition = value;
+                    await plugin.saveSettings();
+                    updateAllSimpleImages(plugin);
+                })
+            )
     }
 }

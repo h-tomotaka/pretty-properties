@@ -5,6 +5,7 @@ import { MarkdownView } from "obsidian";
 import { renderTitleIcon } from "src/utils/updates/updateIcons";
 import { updateAllMetadataContainers } from "src/utils/updates/updateHiddenProperties";
 import { updateCoverForView } from "src/utils/updates/updateCovers";
+import { updateSimpleImageForView } from "src/utils/updates/updateSimpleImages";
 
 
 
@@ -55,6 +56,12 @@ export const patchMarkdownView = async (plugin: PrettyPropertiesPlugin) => {
             }
 
             try {
+              updateSimpleImageForView(this, plugin)
+            } catch {
+              console.error("Can not update simple image for markdown view")
+            }
+
+            try {
               updateAllMetadataContainers(plugin) 
             } catch {
               console.error("Can not update metadata containers on loading frontmatter")
@@ -92,7 +99,6 @@ export const patchMarkdownView = async (plugin: PrettyPropertiesPlugin) => {
     }
   })
 }
-
 
 
 
