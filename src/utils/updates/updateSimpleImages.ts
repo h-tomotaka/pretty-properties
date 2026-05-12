@@ -4,7 +4,7 @@ import { getNestedProperty } from "../propertyUtils";
 
 const SIMPLE_IMAGE_CLASS = "pp-simple-frontmatter-image";
 
-const normalizeImageValue = (value: string): string | null => {
+const formatImageMarkdown = (value: string): string | null => {
   let normalized = value.trim();
   if (!normalized) {
     return null;
@@ -38,16 +38,16 @@ const getSimpleImageValue = (
     return null;
   }
 
-  let value = getNestedProperty(frontmatter, plugin.settings.simpleImageProperty);
-  if (Array.isArray(value)) {
-    value = value[0];
-  }
-
-  if (typeof value !== "string") {
+  const rawValue = getNestedProperty(
+    frontmatter,
+    plugin.settings.simpleImageProperty
+  );
+  const normalizedValue = Array.isArray(rawValue) ? rawValue[0] : rawValue;
+  if (typeof normalizedValue !== "string") {
     return null;
   }
 
-  return value;
+  return normalizedValue;
 };
 
 const removeSimpleImage = (contentEl: HTMLElement) => {
@@ -82,7 +82,7 @@ export const renderSimpleImage = async (
     return;
   }
 
-  const imageMarkdown = normalizeImageValue(rawValue);
+  const imageMarkdown = formatImageMarkdown(rawValue);
   if (!imageMarkdown) {
     removeSimpleImage(contentEl);
     return;
