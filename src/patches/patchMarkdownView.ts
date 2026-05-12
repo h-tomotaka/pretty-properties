@@ -55,11 +55,9 @@ export const patchMarkdownView = async (plugin: PrettyPropertiesPlugin) => {
               console.error("Can not update cover for markdown view")
             }
 
-            try {
-              updateSimpleImageForView(this, plugin)
-            } catch {
-              console.error("Can not update simple image for markdown view")
-            }
+            updateSimpleImageForView(this, plugin).catch(() => {
+              console.error("Cannot update simple image for markdown view")
+            })
 
             try {
               updateAllMetadataContainers(plugin) 
@@ -99,7 +97,6 @@ export const patchMarkdownView = async (plugin: PrettyPropertiesPlugin) => {
     }
   })
 }
-
 
 
 

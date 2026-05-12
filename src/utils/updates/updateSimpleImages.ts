@@ -11,7 +11,7 @@ const normalizeImageValue = (value: string): string => {
     normalized = `![](${normalized})`;
   }
 
-  if (normalized.startsWith("[") && !normalized.startsWith("!")) {
+  if (normalized.startsWith("[")) {
     normalized = `!${normalized}`;
   }
 
@@ -120,7 +120,7 @@ export const updateSimpleImageForView = async (
 
   const cache = plugin.app.metadataCache.getFileCache(file);
   const frontmatter = cache?.frontmatter;
-  await renderSimpleImage(view.contentEl, frontmatter, file.path || "", plugin);
+  await renderSimpleImage(view.contentEl, frontmatter, file.path, plugin);
 };
 
 export const updateAllSimpleImages = (plugin: PrettyPropertiesPlugin) => {
