@@ -4,19 +4,31 @@ import { getNestedProperty } from "../propertyUtils";
 
 const SIMPLE_IMAGE_CLASS = "pp-simple-frontmatter-image";
 
-const normalizeImageValue = (value: string): string => {
+const normalizeImageValue = (value: string): string | null => {
   let normalized = value.trim();
-
-  if (normalized.startsWith("http")) {
-    normalized = `![](${normalized})`;
+  if (!normalized) {
+    return null;
   }
 
-  if (normalized.startsWith("[")) {
-    normalized = `!${normalized}`;
-  }
+  if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
+    try {
+      const url = new URL(normalized);
+      if (url.protocol !== "http:" && url.protocol !== "https:") {
+        return null;
+      }
+      const safeUrl = encodeURI(url.toString());
+      normalized = `![](${safeUrl})`;
+    } catch {
+      return null;
+    }
+  } else {
+    if (normalized.startsWith("[")) {
+      normalized = `!${normalized}`;
+    }
 
-  if (!normalized.startsWith("![")) {
-    normalized = `![[${normalized}]]`;
+    if (!normalized.startsWith("![")) {
+      normalized = `![[${normalized}]]`;
+    }
   }
 
   return normalized;
@@ -76,14 +88,25 @@ export const renderSimpleImage = async (
   }
 
   const imageMarkdown = normalizeImageValue(rawValue);
+  if (!imageMarkdown) {
+    removeSimpleImage(contentEl);
+    return;
+  }
+
   const temp = document.createElement("div");
-  await MarkdownRenderer.render(
-    plugin.app,
-    imageMarkdown,
-    temp,
-    sourcePath,
-    plugin
-  );
+  try {
+    await MarkdownRenderer.render(
+      plugin.app,
+      imageMarkdown,
+      temp,
+      sourcePath,
+      plugin
+    );
+  } catch (error) {
+    console.error("Cannot render simple frontmatter image", error);
+    removeSimpleImage(contentEl);
+    return;
+  }
 
   const image = temp.querySelector("img");
   if (!image) {
