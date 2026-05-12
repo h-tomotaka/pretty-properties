@@ -13,9 +13,6 @@ const normalizeImageValue = (value: string): string | null => {
   if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
     try {
       const url = new URL(normalized);
-      if (url.protocol !== "http:" && url.protocol !== "https:") {
-        return null;
-      }
       const safeUrl = encodeURI(url.toString());
       normalized = `![](${safeUrl})`;
     } catch {
