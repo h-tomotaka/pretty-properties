@@ -19,9 +19,11 @@ export interface PPPluginSettings {
     enableBanner: boolean;
 	enableIcon: boolean;
     enableCover: boolean;
+	enableSimpleImage: boolean;
     bannerProperty: string;
 	iconProperty: string;
     coverProperty: string;
+	simpleImageProperty: string;
     extraCoverProperties: string[],
     bannerHeight: number;
     bannerHeightMobile: number;
@@ -118,6 +120,7 @@ export interface PPPluginSettings {
 	hideCoverCollapsed: boolean,
 	hidePropTitle: boolean,
 	hideAddPropertyButton: boolean,
+	simpleImagePosition: string,
 }
 
 
@@ -132,9 +135,11 @@ export const DEFAULT_SETTINGS: PPPluginSettings = {
     enableBanner: true,
 	enableIcon: true,
     enableCover: true,
+	enableSimpleImage: false,
     bannerProperty: "banner",
 	iconProperty: "icon",
     coverProperty: "cover",
+	simpleImageProperty: "image",
     extraCoverProperties: [],
     bannerHeight: 150, 
     bannerHeightMobile: 100,
@@ -245,6 +250,7 @@ export const DEFAULT_SETTINGS: PPPluginSettings = {
 	hideCoverCollapsed: false,
 	hidePropTitle: false,
 	hideAddPropertyButton: false,
+	simpleImagePosition: "left",
 
 }
 

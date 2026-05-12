@@ -21,6 +21,10 @@ Right-click on the cover to change it's shape or select another image. You can u
 
 ![person profile note](images/image-2.png)
 
+### Simple frontmatter image
+
+If you only need a single image from frontmatter, enable the simple frontmatter image option in the Covers settings. Set the property name (for example, `image`) and choose where it should appear (left/right/top/bottom). The value can be an internal link (`[[image.png]]`) or an external URL.
+
 ### Banner
 
 You can add simple banners to your notes. To do so run command "Select banner image". It will add the "banner" property to your note. Right-click on the banner to change the banner image or it's position.  

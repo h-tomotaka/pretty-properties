@@ -1,6 +1,7 @@
 import { TFile, CachedMetadata, MarkdownView, HoverPopover } from "obsidian";
 import PrettyPropertiesPlugin from "src/main";
 import { renderCover, updateCoverForView } from "./updateCovers";
+import { renderSimpleImage, updateSimpleImageForView } from "./updateSimpleImages";
 import { renderIcon, updateIconForView } from "./updateIcons";
 import { updateDateInput, updateDateTimeInput } from "./updateDates";
 import { updateProgress  } from "./updateProgress";
@@ -200,6 +201,7 @@ export const updateAllProperties = async (plugin:PrettyPropertiesPlugin) => {
             updateBannerForView(view, plugin);
             updateIconForView(view, plugin);
             updateCoverForView(view, plugin);
+            updateSimpleImageForView(view, plugin);
             
             let state = view.getState()
 
@@ -367,6 +369,7 @@ export const updateImagesForView = async (view: MarkdownView, plugin: PrettyProp
             let oldCoverDiv = contentEl?.querySelector(".metadata-side-image");
             oldCoverDiv?.remove();
         }
+        await renderSimpleImage(contentEl, frontmatter, sourcePath, plugin);
         if (frontmatter && getNestedProperty(frontmatter, plugin.settings.iconProperty)  && plugin.settings.enableIcon) {
             renderIcon(contentEl, frontmatter, sourcePath, plugin);
             
@@ -438,6 +441,7 @@ export const updateImagesOnCacheChanged = async (file: TFile, cache: CachedMetad
           let oldCoverDiv = contentEl?.querySelector(".metadata-side-image");
           oldCoverDiv?.remove();
         }
+        await renderSimpleImage(contentEl, frontmatter, sourcePath, plugin);
         if (frontmatter && getNestedProperty(frontmatter, plugin.settings.iconProperty)  && plugin.settings.enableIcon) {
           renderIcon(contentEl, frontmatter, sourcePath, plugin);
          

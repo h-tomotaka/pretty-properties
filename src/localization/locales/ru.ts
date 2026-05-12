@@ -214,6 +214,9 @@ export default {
   HIDE_COVER_COLLAPSED: "Скрывать обложку когда свойства свёрнуты",
   HIDE_PROPERTIES_TITLE: "Скрыть заголовок свойств",
   HIDE_ADD_PROPERTY_BUTTON: "Скрыть кнопку добавления свойств",
+  SIMPLE_IMAGE_SECTION: "Простое изображение из frontmatter",
+  ENABLE_SIMPLE_IMAGE: "Включить простое изображение",
+  SIMPLE_IMAGE_PROPERTY: "Свойство для изображения",
+  SIMPLE_IMAGE_POSITION: "Положение изображения",
   DELETE_TAG: "Удалить тэг",
 };
-
