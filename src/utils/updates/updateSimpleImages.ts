@@ -13,8 +13,7 @@ const normalizeImageValue = (value: string): string | null => {
   if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
     try {
       const url = new URL(normalized);
-      const safeUrl = encodeURI(url.toString());
-      normalized = `![](${safeUrl})`;
+      normalized = `![](${url.toString()})`;
     } catch {
       return null;
     }
@@ -48,8 +47,7 @@ const getSimpleImageValue = (
     return null;
   }
 
-  const trimmed = value.trim();
-  return trimmed ? trimmed : null;
+  return value;
 };
 
 const removeSimpleImage = (contentEl: HTMLElement) => {
